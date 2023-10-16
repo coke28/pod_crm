@@ -19,7 +19,7 @@ class PageController extends Controller
       // The user is logged in...
       return redirect()->route('user.dash');
     } else {
-      return redirect()->route('get.login');
+      return redirect()->route('guest.index');
     }
   }
 
@@ -27,6 +27,12 @@ class PageController extends Controller
   {
     return view('auth.login');
   }
+
+  public function guestPage()
+  {
+    return view('guest.view');
+  }
+
 
   public function dashboardPage()
   {
