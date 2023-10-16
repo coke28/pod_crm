@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\UserInfo;
+use App\Models\UserLevel;
 use Faker\Generator;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -17,28 +18,23 @@ class UsersSeeder extends Seeder
      */
     public function run(Generator $faker)
     {
-        $demoUser = User::create([
-            'first_name'        => $faker->firstName,
-            'last_name'         => $faker->lastName,
-            'email'             => 'demo@demo.com',
-            'password'          => Hash::make('demo'),
-            'email_verified_at' => now(),
-        ]);
+        $demoUserLevel = new UserLevel();
+        $demoUserLevel->name = "Admin";
 
-        $dummyInfo = [
-            'company'  => $faker->company,
-            'phone'    => $faker->phoneNumber,
-            'website'  => $faker->url,
-            'language' => $faker->languageCode,
-            'country'  => $faker->countryCode,
-        ];
+        $demoUserLevel->save();
+     
 
-        $info = new UserInfo();
-        foreach ($dummyInfo as $key => $value) {
-            $info->$key = $value;
-        }
-        $info->user()->associate($demoUser);
-        $info->save();
+        $demoUser = new User();
+        $demoUser->first_name = $faker->firstName;
+        $demoUser->last_name = $faker->lastName;
+        $demoUser->user_level_id = $demoUserLevel->id;
+        $demoUser->email = 'demo@demo.com';
+        $demoUser->password = Hash::make('demo');
+        $demoUser->email_verified_at = now();
+        $demoUser->save();
+
+       
+
 
         // User::factory(10)->create();
     }
