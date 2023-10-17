@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -83,6 +84,25 @@ class PageController extends Controller
       'pageDescription' => ''
     ));
   }
+
+  public function manageImage()
+  {
+    // $hasAccess = $this->permissionCheck(auth()->user()->userlevel->n2_user_roles);
+    // if (!$hasAccess) {
+      // if (Auth::check()) {
+      //   // The user is logged in...
+      //   return redirect()->route('user.dash');
+      // } else {
+      //   return redirect()->route('get.login');
+      // }
+    // }
+    return view('tools.manageImages.view', array(
+      'pageTitle' => 'Manage Images',
+      'pageDescription' => '',
+      'categories' => Category::where('status','1')->where('deleted',0)->get()
+    ));
+  }
+
 
   public function manageCategory()
   {

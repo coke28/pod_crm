@@ -60,7 +60,7 @@
         {{-- add random version of script at the end of script tag to prevent the need to F5 refresh --}}
         <script type="text/javascript" src="{{ "/".'custom/tools/manageImages/image_dt.js?v=' . rvndev()->getrandomstring(30)}}"></script>
         <script type="text/javascript" src="{{ "/".'custom/tools/manageImages/addImageValidation.js?v='. rvndev()->getrandomstring(30) }}"></script>
-        <script type="text/javascript" src="{{ "/".'custom/tools/manageImages/editImageValidation.js?v='. rvndev()->getrandomstring(30) }}"></script>
+        {{-- <script type="text/javascript" src="{{ "/".'custom/tools/manageImages/editImageValidation.js?v='. rvndev()->getrandomstring(30) }}"></script> --}}
         <script type="text/javascript" src="{{ "/".'custom/tools/manageImages/deleteImageValidation.js?v='. rvndev()->getrandomstring(30) }}"></script>
     @endsection  
     
