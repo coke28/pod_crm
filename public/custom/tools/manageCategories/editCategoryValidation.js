@@ -1,26 +1,12 @@
 // Class definition
-var addFormValidation = (function () {
+var editCategoryValidation = (function () {
     // Private functions
     var initDatatable = function () {
         const fv = FormValidation.formValidation(
-            document.getElementById("add_form_form"),
+            document.getElementById("edit_category_form"),
             {
                 fields: {
-                    form_name: {
-                        validators: {
-                            notEmpty: {
-                                message: "This field is required.",
-                            },
-                        },
-                    },
-                    data_set: {
-                        validators: {
-                            notEmpty: {
-                                message: "This field is required.",
-                            },
-                        },
-                    },
-                    file_template_url: {
+                    category_name: {
                         validators: {
                             notEmpty: {
                                 message: "This field is required.",
@@ -64,21 +50,18 @@ var addFormValidation = (function () {
             // Show loading indication
 
             document
-                .getElementById("addFormSubmitBtn")
+                .getElementById("editCategorySubmitBtn")
                 .setAttribute("data-kt-indicator", "on");
 
             // Disable button to avoid multiple click
-            document.getElementById("addFormSubmitBtn").disabled = true;
+            document.getElementById("editCategorySubmitBtn").disabled = true;
 
             // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-            var formx = $("#add_form_form")[0]; // You need to use standart javascript object here
+            var formx = $("#edit_category_form")[0]; // You need to use standart javascript object here
             var formDatax = new FormData(formx);
-            var formAddRoute = $("#addFormSubmitBtn").data(
-                "form-add-route"
-            );
-            console.log(formAddRoute);
+            var selectedID = formDatax.get("id");
             $.ajax({
-                url: formAddRoute,
+                url: "/category/edit/"+selectedID,
                 type: "POST",
                 data: formDatax,
                 contentType: false,
@@ -111,9 +94,9 @@ var addFormValidation = (function () {
                         };
 
                         toastr.success(data.message, "Success");
-                        $("#add_form_form").trigger("reset");
-                        $("#addForm").modal("toggle");
-                        $("#form_dt").DataTable().ajax.reload();
+                        $("#edit_category_form").trigger("reset");
+                        $("#editCategory").modal("toggle");
+                        $("#category_dt").DataTable().ajax.reload();
                     } else {
                         Swal.fire({
                             text: data.message,
@@ -128,25 +111,26 @@ var addFormValidation = (function () {
                     }
                     $(".error-box").hide();
                     document
-                        .getElementById("addFormSubmitBtn")
+                        .getElementById("editCategorySubmitBtn")
                         .setAttribute("data-kt-indicator", "off");
                     document.getElementById(
-                        "addFormSubmitBtn"
+                        "editCategorySubmitBtn"
                     ).disabled = false;
                     //  event.preventDefault();
                 },
                 error: function (response) {
                     // Handle BACK END validation errors and display them to the user
                     var errors = response.responseJSON.errors;
+                    console.log(errors);
                     for (var field in errors) {
                         // Display errors for each field (e.g., in a div with the corresponding field name)
-                        $("#" + field + "_error").html(errors[field][0]);
+                        $("#" + field + "_error_edit").html(errors[field][0]);
                     }
                     document
-                        .getElementById("addFormSubmitBtn")
+                        .getElementById("editCategorySubmitBtn")
                         .setAttribute("data-kt-indicator", "off");
                     document.getElementById(
-                        "addFormSubmitBtn"
+                        "editCategorySubmitBtn"
                     ).disabled = false;
                     // Show the error box
                     $(".error-box").show();
@@ -166,5 +150,37 @@ var addFormValidation = (function () {
 
 jQuery(document).ready(function () {
     //DONT FOGET THIS!!!
-    addFormValidation.init();
+    editCategoryValidation.init();
+    // event.preventDefault();
+    jQuery(document).off("click", "#edit_category_btn");
+    jQuery(document).on("click", "#edit_category_btn", function (e) {
+        var selectedID = $(this).data("id");
+        var target = document.querySelector("#categoryModalContent");
+        var blockUI = new KTBlockUI(target, {
+            message:
+                '<div class="blockui-message"><span class="spinner-border text-primary"></span> Loading...</div>',
+        });
+        blockUI.block();
+        $.ajax({
+            url: "/category/get/"+selectedID,
+            type: "GET",
+            contentType: false,
+            cache: false,
+            processData: false,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (data) {
+                blockUI.release();
+                blockUI.destroy();
+                var obj = JSON.parse(data);
+                if (obj) {
+                    $('#edit_category_form [name="id"]').val(obj.id);
+                    $('#edit_category_form [name="category_name"]').val(obj.category_name);
+                    $('#edit_category_form [name="category_description"]').val(obj.category_description);
+                    $('#edit_category_form [name="status"]').val(obj.status);
+                }
+            },
+        });
+    });
 });

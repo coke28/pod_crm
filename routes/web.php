@@ -12,7 +12,10 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\FormController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CrmLogController;
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserLevelController;
 use Illuminate\Support\Facades\Event;
 
@@ -54,6 +57,47 @@ Route::middleware('auth')->group(function () {
     Route::post('edit/{userLevel}', [UserLevelController::class, 'userLevelEdit'])->name('userLevel.edit');
     Route::post('delete/{userLevel}', [UserLevelController::class, 'userLevelDelete'])->name('userLevel.delete');
   });
+
+  Route::group(['prefix' => 'project'], function () {
+    //User Level Routes
+    Route::get('/', [PageController::class, 'manageProject'])->name('project.index');
+    Route::post('table', [ProjectController::class, 'projectTB'])->name('project.table');
+    Route::post('add', [ProjectController::class, 'projectAdd'])->name('project.add');
+    Route::get('get/{project}', [ProjectController::class, 'projectGet'])->name('project.get');
+    Route::post('edit/{project}', [ProjectController::class, 'projectEdit'])->name('project.edit');
+    Route::post('delete/{project}', [ProjectController::class, 'projectDelete'])->name('project.delete');
+  });
+
+  Route::group(['prefix' => 'image'], function () {
+    //User Level Routes
+    Route::get('/', [PageController::class, 'manageImage'])->name('image.index');
+    Route::post('table', [ImageController::class, 'imageTB'])->name('image.table');
+    Route::post('add', [ImageController::class, 'imageAdd'])->name('image.add');
+    Route::get('get/{image}', [ImageController::class, 'imageGet'])->name('image.get');
+    Route::post('edit/{image}', [ImageController::class, 'imageEdit'])->name('image.edit');
+    Route::post('delete/{image}', [ImageController::class, 'imageDelete'])->name('image.delete');
+  });
+
+
+  Route::group(['prefix' => 'category'], function () {
+    //User Level Routes
+    Route::get('/', [PageController::class, 'manageCategory'])->name('category.index');
+    Route::post('table', [CategoryController::class, 'categoryTB'])->name('category.table');
+    Route::post('add', [CategoryController::class, 'categoryAdd'])->name('category.add');
+    Route::get('get/{category}', [CategoryController::class, 'categoryGet'])->name('category.get');
+    Route::post('edit/{category}', [CategoryController::class, 'categoryEdit'])->name('category.edit');
+    Route::post('delete/{category}', [CategoryController::class, 'categoryDelete'])->name('category.delete');
+  });
+
+ 
+
+  Route::group(['prefix' => 'crmLog'], function () {
+    //Form Routes
+    Route::get('/', [PageController::class, 'manageCrmLog'])->name('crmLog.index');
+    Route::post('table', [CrmLogController::class, 'crmLogTB'])->name('crmLog.table');
+    Route::post('delete/{crmLog}', [CrmLogController::class, 'crmLogDelete'])->name('crmLog.delete');
+  });
+
   Route::group(['prefix' => 'form'], function () {
     //Form Routes
     Route::get('/', [PageController::class, 'manageForm'])->name('form.index');
@@ -65,12 +109,6 @@ Route::middleware('auth')->group(function () {
     // Route::post('delete/{form}', [FormController::class, 'formDelete'])->name('form.delete');
   });
 
-  Route::group(['prefix' => 'crmLog'], function () {
-    //Form Routes
-    Route::get('/', [PageController::class, 'manageCrmLog'])->name('crmLog.index');
-    Route::post('table', [CrmLogController::class, 'crmLogTB'])->name('crmLog.table');
-    Route::post('delete/{crmLog}', [CrmLogController::class, 'crmLogDelete'])->name('crmLog.delete');
-  });
   Route::post('/logout', 'Auth\AuthenticatedSessionController@destroy')->name('logout');
   Route::get('/dashboard', 'PageController@dashboardPage')->name('user.dash');
 });

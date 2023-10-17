@@ -35,6 +35,42 @@
         </div>
         @endif
 
+        {{-- @if(auth()->user()->userlevel->n2_user_roles == 1) --}}
+        <div class="menu-item">
+            <a class="menu-link {{ rvndev()->getActiveNavClass('page', 'project.index')['main'] }}"
+                href="{{ route('project.index', [], false) }}">
+                <span class="menu-icon">
+                    {!! theme()->getSvgIcon('icons/duotone/Design/PenAndRuller.svg', "svg-icon-2") !!}
+                </span>
+                <span class="menu-title">Manage Projects</span>
+            </a>
+        </div>
+        {{-- @endif --}}
+
+        {{-- @if(auth()->user()->userlevel->n2_user_roles == 1) --}}
+        <div class="menu-item">
+            <a class="menu-link {{ rvndev()->getActiveNavClass('page', 'image.index')['main'] }}"
+                href="{{ route('image.index', [], false) }}">
+                <span class="menu-icon">
+                    {!! theme()->getSvgIcon('icons/duotone/Design/PenAndRuller.svg', "svg-icon-2") !!}
+                </span>
+                <span class="menu-title">Manage Images</span>
+            </a>
+        </div>
+        {{-- @endif --}}
+
+        {{-- @if(auth()->user()->userlevel->n2_user_roles == 1) --}}
+        <div class="menu-item">
+            <a class="menu-link {{ rvndev()->getActiveNavClass('page', 'category.index')['main'] }}"
+                href="{{ route('category.index', [], false) }}">
+                <span class="menu-icon">
+                    {!! theme()->getSvgIcon('icons/duotone/Design/PenAndRuller.svg', "svg-icon-2") !!}
+                </span>
+                <span class="menu-title">Manage Categories</span>
+            </a>
+        </div>
+        {{-- @endif --}}
+
         @if(auth()->user()->userlevel->n2_forms == 1)
         <div class="menu-item">
             <a class="menu-link {{ rvndev()->getActiveNavClass('page', 'form.index')['main'] }}"

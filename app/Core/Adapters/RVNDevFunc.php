@@ -46,6 +46,9 @@ class RVNDevFunc
         $included_routes = [
           'user.index',
           'userLevel.index',
+          'project.index',
+          'image.index',
+          'category.index',
           'form.index',
           'crmLog.index',
         ];

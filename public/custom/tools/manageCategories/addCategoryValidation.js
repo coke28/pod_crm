@@ -1,26 +1,12 @@
 // Class definition
-var addFormValidation = (function () {
+var addCategoryValidation = (function () {
     // Private functions
     var initDatatable = function () {
         const fv = FormValidation.formValidation(
-            document.getElementById("add_form_form"),
+            document.getElementById("add_category_form"),
             {
                 fields: {
-                    form_name: {
-                        validators: {
-                            notEmpty: {
-                                message: "This field is required.",
-                            },
-                        },
-                    },
-                    data_set: {
-                        validators: {
-                            notEmpty: {
-                                message: "This field is required.",
-                            },
-                        },
-                    },
-                    file_template_url: {
+                    category_name: {
                         validators: {
                             notEmpty: {
                                 message: "This field is required.",
@@ -64,21 +50,20 @@ var addFormValidation = (function () {
             // Show loading indication
 
             document
-                .getElementById("addFormSubmitBtn")
+                .getElementById("addCategorySubmitBtn")
                 .setAttribute("data-kt-indicator", "on");
 
             // Disable button to avoid multiple click
-            document.getElementById("addFormSubmitBtn").disabled = true;
+            document.getElementById("addCategorySubmitBtn").disabled = true;
 
             // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-            var formx = $("#add_form_form")[0]; // You need to use standart javascript object here
+            var formx = $("#add_category_form")[0]; // You need to use standart javascript object here
             var formDatax = new FormData(formx);
-            var formAddRoute = $("#addFormSubmitBtn").data(
-                "form-add-route"
+            var categoryAddRoute = $("#addCategorySubmitBtn").data(
+                "category-add-route"
             );
-            console.log(formAddRoute);
             $.ajax({
-                url: formAddRoute,
+                url: categoryAddRoute,
                 type: "POST",
                 data: formDatax,
                 contentType: false,
@@ -111,9 +96,9 @@ var addFormValidation = (function () {
                         };
 
                         toastr.success(data.message, "Success");
-                        $("#add_form_form").trigger("reset");
-                        $("#addForm").modal("toggle");
-                        $("#form_dt").DataTable().ajax.reload();
+                        $("#add_category_form").trigger("reset");
+                        $("#addCategory").modal("toggle");
+                        $("#category_dt").DataTable().ajax.reload();
                     } else {
                         Swal.fire({
                             text: data.message,
@@ -128,10 +113,10 @@ var addFormValidation = (function () {
                     }
                     $(".error-box").hide();
                     document
-                        .getElementById("addFormSubmitBtn")
+                        .getElementById("addCategorySubmitBtn")
                         .setAttribute("data-kt-indicator", "off");
                     document.getElementById(
-                        "addFormSubmitBtn"
+                        "addCategorySubmitBtn"
                     ).disabled = false;
                     //  event.preventDefault();
                 },
@@ -143,10 +128,10 @@ var addFormValidation = (function () {
                         $("#" + field + "_error").html(errors[field][0]);
                     }
                     document
-                        .getElementById("addFormSubmitBtn")
+                        .getElementById("addCategorySubmitBtn")
                         .setAttribute("data-kt-indicator", "off");
                     document.getElementById(
-                        "addFormSubmitBtn"
+                        "addCategorySubmitBtn"
                     ).disabled = false;
                     // Show the error box
                     $(".error-box").show();
@@ -166,5 +151,5 @@ var addFormValidation = (function () {
 
 jQuery(document).ready(function () {
     //DONT FOGET THIS!!!
-    addFormValidation.init();
+    addCategoryValidation.init();
 });

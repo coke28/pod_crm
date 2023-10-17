@@ -61,7 +61,7 @@ class PageController extends Controller
       }
     }
     return view('tools.manageUsers.view', array(
-      'pageTitle' => 'Manage User',
+      'pageTitle' => 'Manage Users',
       'pageDescription' => '',
       'userLevels' => UserLevel::where('deleted', '0')->get()
     ));
@@ -79,10 +79,28 @@ class PageController extends Controller
       }
     }
     return view('tools.manageUserLevels.view', array(
-      'pageTitle' => 'Manage User Level',
+      'pageTitle' => 'Manage User Levels',
       'pageDescription' => ''
     ));
   }
+
+  public function manageCategory()
+  {
+    // $hasAccess = $this->permissionCheck(auth()->user()->userlevel->n2_user_roles);
+    // if (!$hasAccess) {
+      // if (Auth::check()) {
+      //   // The user is logged in...
+      //   return redirect()->route('user.dash');
+      // } else {
+      //   return redirect()->route('get.login');
+      // }
+    // }
+    return view('tools.manageCategories.view', array(
+      'pageTitle' => 'Manage Categories',
+      'pageDescription' => ''
+    ));
+  }
+
 
   public function manageForm()
   {

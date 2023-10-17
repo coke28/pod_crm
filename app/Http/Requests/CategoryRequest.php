@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\UniqueExceptCurrent;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,11 +26,8 @@ class UserRequest extends FormRequest
     {
         return [
             //
-            'first_name' => 'required|regex:/^[a-zA-Z0-9]*$/',
-            'last_name' => 'required|regex:/^[a-zA-Z0-9]*$/',
-            'user_level_id' => 'required|integer',
-            'password' => 'sometimes',
-            'email' => ['required',new UniqueExceptCurrent('users', 'email', $this->route('user'))], // Add the 'unique' rule here
+            'category_name' => ['required',new UniqueExceptCurrent('categories', 'category_name', $this->route('category'))],
+            'category_description' => 'sometimes',
             'status' => 'required|in:1,0',
         ];
     }

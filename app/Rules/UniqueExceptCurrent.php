@@ -9,7 +9,7 @@ class UniqueExceptCurrent implements Rule
 {
     protected $table;
     protected $column;
-    protected $id;
+    protected $model;
 
     public function __construct($table, $column, $model)
     {
@@ -27,11 +27,13 @@ class UniqueExceptCurrent implements Rule
             $query = DB::table($this->table)
                 ->where($this->column, $value)
                 ->where('id', '!=', $this->model->id)
+                ->where('deleted','0')
                 ->count();
         } else {
             // For add case
             $query = DB::table($this->table)
                 ->where($this->column, $value)
+                ->where('deleted','0')
                 ->count();
         }
 
