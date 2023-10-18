@@ -45,12 +45,24 @@
                         <div class="col-lg-10 fv-row">
                             <select class="form-control selectpicker" name="category_id" id="category_id">
                                 @foreach ($categories as $category )
-                                <option value="{{ $category->id }}">{{ $category->name  }}</option>
+                                <option value="{{ $category->id }}">{{ $category->category_name  }}</option>
                                 @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-6">
+                        <label class="col-lg-2 col-form-label fw-bold fs-6">Project<span
+                                class="text-danger">*</span></label>
+                        <div class="col-lg-10 fv-row">
+                            <select class="form-control selectpicker" name="project_id" id="project_id">
+                                {{-- @foreach ($categories as $category )
+                                <option value="{{ $category->id }}">{{ $category->category_name  }}</option>
+                                @endforeach --}}
                             </select>
                         </div>
 
                     </div>
+
 
                     <div class="row mb-6">
                         <label class="col-lg-2 col-form-label fw-bold fs-6">Upload <span

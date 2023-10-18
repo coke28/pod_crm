@@ -6,11 +6,14 @@ namespace App\Services;
 use App\Models\Image;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+use function PHPUnit\Framework\throwException;
 
 class ImageService
 {
     private CrmLogService $crmLogService;
- 
+
     public function __construct(CrmLogService $crmLogService)
     {
         $this->crmLogService = $crmLogService;
@@ -27,6 +30,7 @@ class ImageService
         $tableColumns = array(
             'images.id',
             'images.image_name',
+            'images.image_path',
             'images.category_name',
             'projects.project_name',
             'images.status',
@@ -58,9 +62,10 @@ class ImageService
 
         $images = DB::table('images')
             ->join('categories', 'images.category_id', '=', 'categories.id')
-            ->join('projects', 'images.project_id', '=', 'projects.id')
+            ->leftjoin('projects', 'images.project_id', '=', 'projects.id')
             ->selectRaw('images.id
             ,images.image_name
+            ,images.image_path
             ,categories.category_name
             ,projects.project_name
             ,CASE images.status WHEN 0 THEN "INACTIVE" WHEN 1 THEN "ACTIVE" END as status
@@ -91,31 +96,37 @@ class ImageService
     }
     public function imageAdd($validatedData): void
     {
+
+        if (empty($validatedData['file'])) {
+            throw new \Exception('File is empty');
+        }
+
+        if (!$validatedData['file']->isValid()) {
+            throw new \Exception('File is not valid');
+        }
+
+        $filename = now()->format('Y-m-d_H-i-s') . '_' . $validatedData['file']->getClientOriginalName();
+        // Store the file to the specified disk and directory
+        $validatedData['file']->storeAs('/', $filename, 'public_images');
         $image = new Image();
+        $image->image_name = $filename;
+        $image->image_path = 'storage/images/' . $filename;
+        $image->category_id = $validatedData['category_id'];
+        $image->project_id = "0";
+        $image->save();
 
-        
-        
-        
-        // $image->category_name = $validatedData['category_name'];
-        // $image->category_description = $validatedData['category_description'];
-        // $image->status = $validatedData['status'];
-        // $image->save();
-
-        $this->crmLogService->addCrmLog($image,"Manage Images","imageAdd");
-
-        
+        $this->crmLogService->addCrmLog($image, "Manage Images", "imageAdd");
     }
 
     public function imageDelete(Image $image)
     {
-        $image->deleted = "1";
-        $image->save();
-
-        $this->crmLogService->addCrmLog($image,"Manage Images","imageDelete");
-
+        if (Storage::disk('public_images')->exists($image->image_name)) {
+            Storage::disk('public_images')->delete($image->image_name);
+            $image->deleted = "1";
+            $image->save();
+            $this->crmLogService->addCrmLog($image, "Manage Images", "imageDelete");
+        }else{
+            throw new \Exception('File not found');
+        }
     }
-
-
-
-
 }

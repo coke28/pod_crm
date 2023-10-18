@@ -35,7 +35,7 @@
                 <tr class="fw-semibold fs-6 text-black-800 border-bottom border-gray-200">
                     <th>ID</th>
                     <th>Image Name</th>
-                    <th>Image Path</th>
+                    <th>Image</th>
                     <th>Category</th>
                     <th>Project</th>
                     <th>Status</th>
