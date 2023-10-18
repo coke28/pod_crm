@@ -1,33 +1,39 @@
 // Class definition
-var addImageValidation = (function () {
+var addProjectValidation = (function () {
     // Private functions
     var initDatatable = function () {
         const fv = FormValidation.formValidation(
-            document.getElementById("add_image_form"),
+            document.getElementById("add_project_form"),
             {
                 fields: {
-                    file: {
-                        validators: {
-                            notEmpty: {
-                                message:
-                                    "The image is required and cannot be empty",
-                            },
-                            file: {
-                                extension: "jpeg,jpg,png,gif",
-                                type: "image/jpeg,image/png,image",
-                                maxSize: 5 * 1024 * 1024, // 5 MB
-                                message: "The selected file is not valid",
-                            },
-                        },
-                    },
-                    category_id: {
+                    project_name: {
                         validators: {
                             notEmpty: {
                                 message: "This field is required.",
                             },
                         },
                     },
-                    project_id: {
+                    logo_file: {
+                        validators: {
+                            logo_file: {
+                                extension: "jpeg,jpg,png,gif",
+                                type: "image/jpeg,image/png,image",
+                                maxSize: 5 * 1024 * 1024, // 5 MB
+                                message: "The selected logo_file is not valid",
+                            },
+                        },
+                    },
+                    map_file: {
+                        validators: {
+                            logo_file: {
+                                extension: "jpeg,jpg,png,gif",
+                                type: "image/jpeg,image/png,image",
+                                maxSize: 5 * 1024 * 1024, // 5 MB
+                                message: "The selected logo_file is not valid",
+                            },
+                        },
+                    },
+                    status: {
                         validators: {
                             notEmpty: {
                                 message: "This field is required.",
@@ -64,17 +70,20 @@ var addImageValidation = (function () {
             // Show loading indication
 
             document
-                .getElementById("addImageSubmitBtn")
+                .getElementById("addProjectSubmitBtn")
                 .setAttribute("data-kt-indicator", "on");
 
             // Disable button to avoid multiple click
-            document.getElementById("addImageSubmitBtn").disabled = true;
+            document.getElementById("addProjectSubmitBtn").disabled = true;
 
             // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-            var formx = $("#add_image_form")[0]; // You need to use standart javascript object here
+            var formx = $("#add_project_form")[0]; // You need to use standart javascript object here
             var formDatax = new FormData(formx);
+            var projectAddRoute = $("#addProjectSubmitBtn").data(
+                "project-add-route"
+            );
             $.ajax({
-                url: "/image/add",
+                url: projectAddRoute,
                 type: "POST",
                 data: formDatax,
                 contentType: false,
@@ -107,10 +116,11 @@ var addImageValidation = (function () {
                         };
 
                         toastr.success(data.message, "Success");
-                        $("#add_image_form").trigger("reset");
-                        $("#addImage").modal("toggle");
-                        $("#image_dt").DataTable().ajax.reload();
-                        $("#add_image_form .fileImagePreview").html("");
+                        $("#add_project_form").trigger("reset");
+                        $("#addProject").modal("toggle");
+                        $("#project_dt").DataTable().ajax.reload();
+                        $("#add_project_form .logoImagePreview").html("");
+                        $("#add_project_form .mapImagePreview").html("");
                     } else {
                         Swal.fire({
                             text: data.message,
@@ -125,10 +135,10 @@ var addImageValidation = (function () {
                     }
                     $(".error-box").hide();
                     document
-                        .getElementById("addImageSubmitBtn")
+                        .getElementById("addProjectSubmitBtn")
                         .setAttribute("data-kt-indicator", "off");
                     document.getElementById(
-                        "addImageSubmitBtn"
+                        "addProjectSubmitBtn"
                     ).disabled = false;
                     //  event.preventDefault();
                 },
@@ -140,10 +150,10 @@ var addImageValidation = (function () {
                         $("#" + field + "_error").html(errors[field][0]);
                     }
                     document
-                        .getElementById("addImageSubmitBtn")
+                        .getElementById("addProjectSubmitBtn")
                         .setAttribute("data-kt-indicator", "off");
                     document.getElementById(
-                        "addImageSubmitBtn"
+                        "addProjectSubmitBtn"
                     ).disabled = false;
                     // Show the error box
                     $(".error-box").show();
@@ -163,11 +173,10 @@ var addImageValidation = (function () {
 
 jQuery(document).ready(function () {
     //DONT FOGET THIS!!!
-    addImageValidation.init();
-    // event.preventDefault();
-    //File Upload And preview
-    jQuery(document).off("change", '#add_image_form [name="file"]');
-    jQuery(document).on("change", '#add_image_form [name="file"]', function (e) {
+    addProjectValidation.init();
+
+    jQuery(document).off("change", '#add_project_form [name="logo_file"]');
+    jQuery(document).on("change", '#add_project_form [name="logo_file"]', function (e) {
         console.log(this.files);
         var goodInput = true;
 
@@ -189,7 +198,7 @@ jQuery(document).ready(function () {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $("#add_image_form .fileImagePreview").html(
+                $("#add_project_form .logoImagePreview").html(
                     `
                     <img class="img-fluid" src="` +
                         e.target.result +
@@ -212,4 +221,52 @@ jQuery(document).ready(function () {
             $(this).val("");
         }
     });
+
+    jQuery(document).off("change", '#add_project_form [name="map_file"]');
+    jQuery(document).on("change", '#add_project_form [name="map_file"]', function (e) {
+        console.log(this.files);
+        var goodInput = true;
+
+        if (!(this.files && this.files[0])) {
+            goodInput = false;
+        }
+
+        if (goodInput) {
+            var file = this.files[0];
+            var fileType = file["type"];
+            var validImageTypes = ["image/jpg", "image/jpeg","image/png"];
+            if ($.inArray(fileType, validImageTypes) < 0) {
+                goodInput = false;
+                console.log("yep invalid file type");
+            }
+        }
+
+        if (goodInput) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#add_project_form .mapImagePreview").html(
+                    `
+                    <img class="img-fluid" src="` +
+                        e.target.result +
+                        `">
+              `
+                );
+            };
+
+            reader.readAsDataURL(this.files[0]);
+        } else {
+            Swal.fire({
+                text: "Invalid image format",
+                icon: "info",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn btn-primary",
+                },
+            });
+            $(this).val("");
+        }
+    });
+
 });

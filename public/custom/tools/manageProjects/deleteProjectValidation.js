@@ -1,13 +1,13 @@
 $(document).ready(function (){
 
-    jQuery(document).off('click', '#delete_image');
-    jQuery(document).on('click', '#delete_image', function(e) {
+    jQuery(document).off('click', '#delete_project');
+    jQuery(document).on('click', '#delete_project', function(e) {
       e.preventDefault();
       var id = $(this).data('id');
         //makes sent data name in dt to lowercase
       //console.log($(this).data());
       Swal.fire({
-          html: `Are you sure you want to delete ID: `+$(this).data('id')+` `+$(this).data('imagename')+`?`,
+          html: `Are you sure you want to delete ID: `+$(this).data('id')+` `+$(this).data('projectname')+`?`,
           icon: "info",
           buttonsStyling: false,
           showCancelButton: true,
@@ -20,13 +20,13 @@ $(document).ready(function (){
       }).then(function (result) {
 
           if(result.isConfirmed){
-            var target = document.querySelector("#image_dt");
+            var target = document.querySelector("#project_dt");
             var blockUI = new KTBlockUI(target, {
                 message: '<div class="blockui-message"><span class="spinner-border text-primary"></span> Loading...</div>',
             });
             blockUI.block();
             $.ajax({
-              url: "/image/delete/"+id,
+              url: "/project/delete/"+id,
               type: "POST",
               contentType: false,
               cache: false,
@@ -55,7 +55,7 @@ $(document).ready(function (){
                toastr.success(data.message, "Success");
                blockUI.release();
                blockUI.destroy();
-               $('#image_dt').DataTable().ajax.reload();
+               $('#project_dt').DataTable().ajax.reload();
               },  
               error: function (response) {
                 // Handle BACK END validation errors and display them to the user
@@ -76,6 +76,7 @@ $(document).ready(function (){
                     "showMethod": "fadeIn",
                     "hideMethod": "fadeOut"
                   };
+                  console.log(response);
                   toastr.error(response.responseJSON.error, "Error");
                   blockUI.release();
                   blockUI.destroy();

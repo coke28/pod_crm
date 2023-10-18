@@ -45,7 +45,7 @@
                         <div class="col-lg-10 fv-row">
                             <select class="form-control selectpicker" name="category_id" id="category_id">
                                 @foreach ($categories as $category )
-                                <option value="{{ $category->id }}">{{ $category->category_name  }}</option>
+                                <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -55,9 +55,9 @@
                                 class="text-danger">*</span></label>
                         <div class="col-lg-10 fv-row">
                             <select class="form-control selectpicker" name="project_id" id="project_id">
-                                {{-- @foreach ($categories as $category )
-                                <option value="{{ $category->id }}">{{ $category->category_name  }}</option>
-                                @endforeach --}}
+                                @foreach ($projects as $project )
+                                <option value="{{ $project->id }}">{{ $project->project_name }}</option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -72,6 +72,13 @@
                                 class="form-control form-control-lg form-control-solid" accept=".png, .jpg" />
                         </div>
                     </div>
+
+                    <div class="row mb-6">
+                        <label class="col-lg-2 col-form-label fw-bold fs-6">Preview</label>
+                        <div class="col-lg-10 fv-row fileImagePreview">
+                        </div>
+                    </div>
+
                     {{-- Server Validation Errors --}}
                     <div class="error-box" style="display: none;">
                         <div id="" class="error-message">Server Validation Errors</div>

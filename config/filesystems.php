@@ -59,6 +59,21 @@ return [
             'visibility' => 'public',
         ],
 
+        'public_maps' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/maps'),
+            'url' => env('APP_URL').'/storage/maps',
+            'visibility' => 'public',
+        ],
+
+        'public_logos' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/logos'),
+            'url' => env('APP_URL').'/storage/logos',
+            'visibility' => 'public',
+        ],
+
+
     ],
 
     /*

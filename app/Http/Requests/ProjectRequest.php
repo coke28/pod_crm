@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueExceptCurrent;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProjectRequest extends FormRequest
@@ -13,7 +14,7 @@ class ProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,11 @@ class ProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'project_name' => ['required',new UniqueExceptCurrent('projects', 'project_name', $this->route('project'))],
+            'project_description' => 'sometimes',
+            'map_file' => 'sometimes|file|mimes:jpg,jpeg,png|max:5000',
+            'logo_file' => 'sometimes|file|mimes:jpg,jpeg,png|max:5000',
+            'status' => 'required|in:1,0',
         ];
     }
 }

@@ -1,33 +1,39 @@
 // Class definition
-var addImageValidation = (function () {
+var editProjectValidation = (function () {
     // Private functions
     var initDatatable = function () {
         const fv = FormValidation.formValidation(
-            document.getElementById("add_image_form"),
+            document.getElementById("edit_project_form"),
             {
                 fields: {
-                    file: {
-                        validators: {
-                            notEmpty: {
-                                message:
-                                    "The image is required and cannot be empty",
-                            },
-                            file: {
-                                extension: "jpeg,jpg,png,gif",
-                                type: "image/jpeg,image/png,image",
-                                maxSize: 5 * 1024 * 1024, // 5 MB
-                                message: "The selected file is not valid",
-                            },
-                        },
-                    },
-                    category_id: {
+                    project_name: {
                         validators: {
                             notEmpty: {
                                 message: "This field is required.",
                             },
                         },
                     },
-                    project_id: {
+                    logo_file: {
+                        validators: {
+                            logo_file: {
+                                extension: "jpeg,jpg,png,gif",
+                                type: "image/jpeg,image/png,image",
+                                maxSize: 5 * 1024 * 1024, // 5 MB
+                                message: "The selected logo_file is not valid",
+                            },
+                        },
+                    },
+                    map_file: {
+                        validators: {
+                            logo_file: {
+                                extension: "jpeg,jpg,png,gif",
+                                type: "image/jpeg,image/png,image",
+                                maxSize: 5 * 1024 * 1024, // 5 MB
+                                message: "The selected logo_file is not valid",
+                            },
+                        },
+                    },
+                    status: {
                         validators: {
                             notEmpty: {
                                 message: "This field is required.",
@@ -64,17 +70,18 @@ var addImageValidation = (function () {
             // Show loading indication
 
             document
-                .getElementById("addImageSubmitBtn")
+                .getElementById("editProjectSubmitBtn")
                 .setAttribute("data-kt-indicator", "on");
 
             // Disable button to avoid multiple click
-            document.getElementById("addImageSubmitBtn").disabled = true;
+            document.getElementById("editProjectSubmitBtn").disabled = true;
 
             // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-            var formx = $("#add_image_form")[0]; // You need to use standart javascript object here
+            var formx = $("#edit_project_form")[0]; // You need to use standart javascript object here
             var formDatax = new FormData(formx);
+            var selectedID = formDatax.get("id");
             $.ajax({
-                url: "/image/add",
+                url: "/project/edit/"+selectedID,
                 type: "POST",
                 data: formDatax,
                 contentType: false,
@@ -107,10 +114,11 @@ var addImageValidation = (function () {
                         };
 
                         toastr.success(data.message, "Success");
-                        $("#add_image_form").trigger("reset");
-                        $("#addImage").modal("toggle");
-                        $("#image_dt").DataTable().ajax.reload();
-                        $("#add_image_form .fileImagePreview").html("");
+                        $("#edit_project_form").trigger("reset");
+                        $("#editProject").modal("toggle");
+                        $("#project_dt").DataTable().ajax.reload();
+                        $("#edit_project_form .logoImagePreview").html("");
+                        $("#edit_project_form .mapImagePreview").html("");
                     } else {
                         Swal.fire({
                             text: data.message,
@@ -125,25 +133,26 @@ var addImageValidation = (function () {
                     }
                     $(".error-box").hide();
                     document
-                        .getElementById("addImageSubmitBtn")
+                        .getElementById("editProjectSubmitBtn")
                         .setAttribute("data-kt-indicator", "off");
                     document.getElementById(
-                        "addImageSubmitBtn"
+                        "editProjectSubmitBtn"
                     ).disabled = false;
                     //  event.preventDefault();
                 },
                 error: function (response) {
                     // Handle BACK END validation errors and display them to the user
                     var errors = response.responseJSON.errors;
+                    console.log(errors);
                     for (var field in errors) {
                         // Display errors for each field (e.g., in a div with the corresponding field name)
-                        $("#" + field + "_error").html(errors[field][0]);
+                        $("#" + field + "_error_edit").html(errors[field][0]);
                     }
                     document
-                        .getElementById("addImageSubmitBtn")
+                        .getElementById("editProjectSubmitBtn")
                         .setAttribute("data-kt-indicator", "off");
                     document.getElementById(
-                        "addImageSubmitBtn"
+                        "editProjectSubmitBtn"
                     ).disabled = false;
                     // Show the error box
                     $(".error-box").show();
@@ -163,11 +172,45 @@ var addImageValidation = (function () {
 
 jQuery(document).ready(function () {
     //DONT FOGET THIS!!!
-    addImageValidation.init();
+    editProjectValidation.init();
     // event.preventDefault();
-    //File Upload And preview
-    jQuery(document).off("change", '#add_image_form [name="file"]');
-    jQuery(document).on("change", '#add_image_form [name="file"]', function (e) {
+    jQuery(document).off("click", "#edit_project_btn");
+    jQuery(document).on("click", "#edit_project_btn", function (e) {
+        var selectedID = $(this).data("id");
+        var target = document.querySelector("#projectModalContent");
+        var blockUI = new KTBlockUI(target, {
+            message:
+                '<div class="blockui-message"><span class="spinner-border text-primary"></span> Loading...</div>',
+        });
+        blockUI.block();
+        $.ajax({
+            url: "/project/get/"+selectedID,
+            type: "GET",
+            contentType: false,
+            cache: false,
+            processData: false,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (data) {
+                blockUI.release();
+                blockUI.destroy();
+                var obj = JSON.parse(data);
+                if (obj) {
+                    $('#edit_project_form [name="id"]').val(obj.id);
+                    $('#edit_project_form [name="project_name"]').val(obj.project_name);
+                    $('#edit_project_form [name="project_description"]').val(obj.project_description);
+                    $('#edit_project_form [name="status"]').val(obj.status);
+                    $('#edit_project_form .logoImagePreview').html(`<img class="img-fluid" src="`+"/"+obj.logo_path+`">`);
+                    $('#edit_project_form .mapImagePreview').html(`<img class="img-fluid" src="`+"/"+obj.map_path+`">`);
+
+                  
+                }
+            },
+        });
+    });
+    jQuery(document).off("change", '#edit_project_form [name="logo_file"]');
+    jQuery(document).on("change", '#edit_project_form [name="logo_file"]', function (e) {
         console.log(this.files);
         var goodInput = true;
 
@@ -189,12 +232,58 @@ jQuery(document).ready(function () {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $("#add_image_form .fileImagePreview").html(
+                $("#edit_project_form .logoImagePreview").html(
                     `
-                    <img class="img-fluid" src="` +
+                      <img class="img-fluid" src="` +
                         e.target.result +
                         `">
-              `
+                `
+                );
+            };
+
+            reader.readAsDataURL(this.files[0]);
+        } else {
+            Swal.fire({
+                text: "Invalid image format",
+                icon: "info",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn btn-primary",
+                },
+            });
+            $(this).val("");
+        }
+    });
+    jQuery(document).off("change", '#edit_project_form [name="map_file"]');
+    jQuery(document).on("change", '#edit_project_form [name="map_file"]', function (e) {
+        console.log(this.files);
+        var goodInput = true;
+
+        if (!(this.files && this.files[0])) {
+            goodInput = false;
+        }
+
+        if (goodInput) {
+            var file = this.files[0];
+            var fileType = file["type"];
+            var validImageTypes = ["image/jpg", "image/jpeg","image/png"];
+            if ($.inArray(fileType, validImageTypes) < 0) {
+                goodInput = false;
+                console.log("yep invalid file type");
+            }
+        }
+
+        if (goodInput) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#edit_project_form .mapImagePreview").html(
+                    `
+                      <img class="img-fluid" src="` +
+                        e.target.result +
+                        `">
+                `
                 );
             };
 

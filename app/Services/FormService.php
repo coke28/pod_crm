@@ -70,7 +70,7 @@ class FormService
                 ->orWhere('form_name', 'like', '%' . $search . '%')
                 ->orWhere('file_template_url', 'like', '%' . $search . '%')
                 ->orWhere('data_set', 'like', '%' . $search . '%')
-                ->orWhere('status', 'like', '%' . $search . '%')
+                ->orWhere(DB::raw('CASE status WHEN 0 THEN "INACTIVE" WHEN 1 THEN "ACTIVE" END'), 'like', '%' . $search . '%')
                 ->orWhere('created_at', 'like', '%' . $search . '%');
         })
             ->orderBy($tableColumns[$sortIndex], $sortOrder);

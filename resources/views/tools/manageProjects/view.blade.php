@@ -52,7 +52,7 @@
     
     <!--start::Include your modals here-->
     @include('tools/manageProjects/modals/addProject')
-    @include('tools/manageProjects/modals/editUser')
+    @include('tools/manageProjects/modals/editProject')
    
   
     <!--start::Include your scripts here-->

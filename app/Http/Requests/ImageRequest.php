@@ -26,7 +26,7 @@ class ImageRequest extends FormRequest
         return [
             'file' => 'required|file|mimes:jpg,jpeg,png|max:5000',
             'category_id' => 'required|integer',
-            // 'project_id' => 'required|number',
+            'project_id' => 'required|integer',
         ];
     }
 }

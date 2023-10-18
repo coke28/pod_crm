@@ -62,7 +62,7 @@ class ImageService
 
         $images = DB::table('images')
             ->join('categories', 'images.category_id', '=', 'categories.id')
-            ->leftjoin('projects', 'images.project_id', '=', 'projects.id')
+            ->join('projects', 'images.project_id', '=', 'projects.id')
             ->selectRaw('images.id
             ,images.image_name
             ,images.image_path
@@ -112,7 +112,7 @@ class ImageService
         $image->image_name = $filename;
         $image->image_path = 'storage/images/' . $filename;
         $image->category_id = $validatedData['category_id'];
-        $image->project_id = "0";
+        $image->project_id = $validatedData['project_id'];
         $image->save();
 
         $this->crmLogService->addCrmLog($image, "Manage Images", "imageAdd");
@@ -122,11 +122,11 @@ class ImageService
     {
         if (Storage::disk('public_images')->exists($image->image_name)) {
             Storage::disk('public_images')->delete($image->image_name);
-            $image->deleted = "1";
-            $image->save();
-            $this->crmLogService->addCrmLog($image, "Manage Images", "imageDelete");
-        }else{
-            throw new \Exception('File not found');
+            
+            
         }
+        $image->deleted = "1";
+        $image->save();
+        $this->crmLogService->addCrmLog($image, "Manage Images", "imageDelete");
     }
 }

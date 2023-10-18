@@ -93,8 +93,8 @@
                         <label class="col-lg-2 col-form-label fw-bold fs-6">Status</label>
                         <div class="col-lg-10 fv-row">
                             <select class="form-control selectpicker" name="status" id="status">
-                                <option value="0">Inactive</option>
                                 <option value="1">Active</option>
+                                <option value="0">Inactive</option>
                             </select>
                         </div>
                     </div>
