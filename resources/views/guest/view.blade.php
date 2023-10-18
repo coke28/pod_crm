@@ -1,5 +1,62 @@
 @extends('crmlayout.guestlayout.layout')
 @section('guestcontent')
+<style>
+    /* Insert the above CSS rules here */
+    /* Make the portfolio boxes square */
+    .portfolio-box {
+        width: 100%;
+        /* Take full width of the container */
+        height: 0;
+        /* Reset the height */
+        padding-bottom: 100%;
+        /* This makes the height equal to the width, forming a square */
+        position: relative;
+        /* Position relative to allow the inner content to be absolutely positioned */
+    }
+
+    /* Adjust the images */
+    .portfolio-box img.img-fluid {
+        position: absolute;
+        /* Absolute position within the portfolio box */
+        top: 0;
+        left: 0;
+        width: 100%;
+        /* Force width to 100% of the container */
+        height: 100%;
+        /* Force height to 100% of the container */
+        object-fit: cover;
+        /* Cover the container while maintaining aspect ratio */
+        transition: transform 0.3s ease;
+        /* Smooth transition for hover effect */
+    }
+
+    /* Hover effect */
+    .portfolio-box:hover img.img-fluid {
+        transform: scale(1.05);
+        /* Zoom in effect on hover */
+    }
+
+    /* Adjust the caption */
+    .portfolio-box .portfolio-box-caption {
+        position: absolute;
+        /* Absolute position within the portfolio box */
+        top: 0;
+        left: 0;
+        width: 100%;
+        /* Take full width */
+        height: 100%;
+        /* Take full height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    /* Spacing between portfolio items */
+    .col-lg-4.col-sm-6 {
+        padding: 15px;
+    }
+</style>
 <header class="masthead">
     <div class="container px-4 px-lg-5 h-100">
         <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
@@ -39,29 +96,29 @@
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="mt-5">
                     <div class="mb-2"><i class="bi-gem fs-1 text-primary"></i></div>
-                    <h3 class="h4 mb-2">Sturdy Themes</h3>
-                    <p class="text-muted mb-0">Our themes are updated regularly to keep them bug free!</p>
+                    <h3 class="h4 mb-2">Mission</h3>
+                    <p class="text-muted mb-0">Mission Here!</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="mt-5">
                     <div class="mb-2"><i class="bi-laptop fs-1 text-primary"></i></div>
-                    <h3 class="h4 mb-2">Up to Date</h3>
-                    <p class="text-muted mb-0">All dependencies are kept current to keep things fresh.</p>
+                    <h3 class="h4 mb-2">Vision</h3>
+                    <p class="text-muted mb-0">Vision Here</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="mt-5">
                     <div class="mb-2"><i class="bi-globe fs-1 text-primary"></i></div>
-                    <h3 class="h4 mb-2">Ready to Publish</h3>
-                    <p class="text-muted mb-0">You can use this design as is, or you can make changes!</p>
+                    <h3 class="h4 mb-2">Mission</h3>
+                    <p class="text-muted mb-0">Mission Here!</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="mt-5">
                     <div class="mb-2"><i class="bi-heart fs-1 text-primary"></i></div>
-                    <h3 class="h4 mb-2">Made with Love</h3>
-                    <p class="text-muted mb-0">Is it really open source if it's not made with love?</p>
+                    <h3 class="h4 mb-2">Vision</h3>
+                    <p class="text-muted mb-0">Vision Here</p>
                 </div>
             </div>
         </div>
@@ -75,16 +132,22 @@
         <div class="container-fluid p-0">
 
             <div class="row g-0">
+                @forelse ($projects as $project)
                 <div class="col-lg-4 col-sm-6">
-                    <a class="portfolio-box" href="assets/img/portfolio/fullsize/1.jpg" title="Project Name">
-                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/1.jpg" alt="..." />
+                    <a class="portfolio-box" href="{{ route('guest.project',$project->id) }}" title="Project Name">
+                        <img class="img-fluid" src="{{ asset($project->logo_path) }}" alt="..." />
                         <div class="portfolio-box-caption">
-                            <div class="project-category text-white-50">Category</div>
-                            <div class="project-name">Project Name</div>
+                           
+                            <div class="project-name">{{ $project->project_name }}</div>
+                            <div class="project-category text-white-50">{{ $project->project_description }}</div>
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-4 col-sm-6">
+
+                @empty
+                No Projects Here!
+                @endforelse
+                {{-- <div class="col-lg-4 col-sm-6">
                     <a class="portfolio-box" href="assets/img/portfolio/fullsize/2.jpg" title="Project Name">
                         <img class="img-fluid" src="assets/img/portfolio/thumbnails/2.jpg" alt="..." />
                         <div class="portfolio-box-caption">
@@ -128,7 +191,7 @@
                             <div class="project-name">Project Name</div>
                         </div>
                     </a>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>

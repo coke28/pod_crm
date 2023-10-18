@@ -32,7 +32,16 @@ class PageController extends Controller
 
   public function guestPage()
   {
-    return view('guest.view');
+    return view('guest.view', array(
+      'projects' => Project::where('status','1')->where('deleted','0')->get()
+    ));
+  }
+
+  public function projectPage(Project $project)
+  { 
+    return view('guest.project.view', array(
+      'project' => Project::where('id', $project->id)->where('deleted','0')->first()
+    ));
   }
 
 

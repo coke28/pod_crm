@@ -35,6 +35,7 @@ Route::get('/login', 'PageController@loginPage')->name('get.login');
 Route::post('/login', 'Auth\AuthenticatedSessionController@store')->name('post.login');
 
 Route::get('/guest', 'PageController@guestPage')->name('guest.index');
+Route::get('/project/{project}', 'PageController@projectPage')->name('guest.project');
 
 Route::middleware('auth')->group(function () {
 
