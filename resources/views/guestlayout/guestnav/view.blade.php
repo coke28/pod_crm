@@ -14,13 +14,12 @@
                 @endif
 
                 @if (Route::is('guest.project'))
+                <li class="nav-item"><a class="nav-link" href="{{ route('guest.index') }}">Go Back</a></li>
                 <li class="nav-item"><a class="nav-link" href="#summary">Summary</a></li>
                 <li class="nav-item"><a class="nav-link" href="#map">Map</a></li>
                 <li class="nav-item"><a class="nav-link" href="#logo">Logo</a></li>
                 <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
                 @endif
-             
-
                 <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
             </ul>
         </div>
