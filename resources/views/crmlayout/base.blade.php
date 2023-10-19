@@ -22,7 +22,7 @@ License: {{ theme()->getOption('product', 'license') }}
     <link rel="shortcut icon" href="{{ asset(theme()->getDemo() . '/' .theme()->getOption('assets', 'favicon')) }}"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-     <!-- Favicon-->
+     {{-- <!-- Favicon-->
      <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
      <!-- Bootstrap Icons-->
      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -32,7 +32,7 @@ License: {{ theme()->getOption('product', 'license') }}
      <!-- SimpleLightbox plugin CSS-->
      <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
      <!-- Core theme CSS (includes Bootstrap)-->
-     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" /> --}}
 
     {{-- begin::Fonts --}}
     {{ theme()->includeFonts() }}
@@ -120,10 +120,6 @@ License: {{ theme()->getOption('product', 'license') }}
 @endif
 
 @yield('scripts')
-<!-- Bootstrap core JS-->
-{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> --}}
-<!-- SimpleLightbox plugin JS-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
 <!-- Core theme JS-->
 <script src="{{ asset('js/scripts.js') }}"></script>
 <script src="{{ '/js/app.js' }}"></script>

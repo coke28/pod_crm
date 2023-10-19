@@ -1,62 +1,5 @@
-@extends('crmlayout.guestlayout.layout')
+@extends('guestlayout.layout')
 @section('guestcontent')
-<style>
-    /* Insert the above CSS rules here */
-    /* Make the portfolio boxes square */
-    .portfolio-box {
-        width: 100%;
-        /* Take full width of the container */
-        height: 0;
-        /* Reset the height */
-        padding-bottom: 100%;
-        /* This makes the height equal to the width, forming a square */
-        position: relative;
-        /* Position relative to allow the inner content to be absolutely positioned */
-    }
-
-    /* Adjust the images */
-    .portfolio-box img.img-fluid {
-        position: absolute;
-        /* Absolute position within the portfolio box */
-        top: 0;
-        left: 0;
-        width: 100%;
-        /* Force width to 100% of the container */
-        height: 100%;
-        /* Force height to 100% of the container */
-        object-fit: cover;
-        /* Cover the container while maintaining aspect ratio */
-        transition: transform 0.3s ease;
-        /* Smooth transition for hover effect */
-    }
-
-    /* Hover effect */
-    .portfolio-box:hover img.img-fluid {
-        transform: scale(1.05);
-        /* Zoom in effect on hover */
-    }
-
-    /* Adjust the caption */
-    .portfolio-box .portfolio-box-caption {
-        position: absolute;
-        /* Absolute position within the portfolio box */
-        top: 0;
-        left: 0;
-        width: 100%;
-        /* Take full width */
-        height: 100%;
-        /* Take full height */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
-
-    /* Spacing between portfolio items */
-    .col-lg-4.col-sm-6 {
-        padding: 15px;
-    }
-</style>
 <header class="masthead">
     <div class="container px-4 px-lg-5 h-100">
         <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
@@ -137,7 +80,7 @@
                     <a class="portfolio-box" href="{{ route('guest.project',$project->id) }}" title="Project Name">
                         <img class="img-fluid" src="{{ asset($project->logo_path) }}" alt="..." />
                         <div class="portfolio-box-caption">
-                           
+
                             <div class="project-name">{{ $project->project_name }}</div>
                             <div class="project-category text-white-50">{{ $project->project_description }}</div>
                         </div>
@@ -147,53 +90,7 @@
                 @empty
                 No Projects Here!
                 @endforelse
-                {{-- <div class="col-lg-4 col-sm-6">
-                    <a class="portfolio-box" href="assets/img/portfolio/fullsize/2.jpg" title="Project Name">
-                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/2.jpg" alt="..." />
-                        <div class="portfolio-box-caption">
-                            <div class="project-category text-white-50">Category</div>
-                            <div class="project-name">Project Name</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a class="portfolio-box" href="assets/img/portfolio/fullsize/3.jpg" title="Project Name">
-                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/3.jpg" alt="..." />
-                        <div class="portfolio-box-caption">
-                            <div class="project-category text-white-50">Category</div>
-                            <div class="project-name">Project Name</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a class="portfolio-box" href="assets/img/portfolio/fullsize/4.jpg" title="Project Name">
-                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/4.jpg" alt="..." />
-                        <div class="portfolio-box-caption">
-                            <div class="project-category text-white-50">Category</div>
-                            <div class="project-name">Project Name</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a class="portfolio-box" href="assets/img/portfolio/fullsize/5.jpg" title="Project Name">
-                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/5.jpg" alt="..." />
-                        <div class="portfolio-box-caption">
-                            <div class="project-category text-white-50">Category</div>
-                            <div class="project-name">Project Name</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a class="portfolio-box" href="assets/img/portfolio/fullsize/6.jpg" title="Project Name">
-                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/6.jpg" alt="..." />
-                        <div class="portfolio-box-caption p-3">
-                            <div class="project-category text-white-50">Category</div>
-                            <div class="project-name">Project Name</div>
-                        </div>
-                    </a>
-                </div> --}}
             </div>
         </div>
-    </section>
 </div>
 @endsection
