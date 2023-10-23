@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -40,7 +41,9 @@ class PageController extends Controller
   public function projectPage(Project $project)
   { 
     return view('guest.project.view', array(
-      'project' => Project::where('id', $project->id)->where('deleted','0')->first()
+      'project' => Project::where('id', $project->id)->where('status','1')->where('deleted','0')->first(),
+      'categories' => Category::where('status','1')->where('deleted','0')->get(),
+      'images' => Image::where('project_id',$project->id)->where('status','1')->where('deleted','0')->get()
     ));
   }
 

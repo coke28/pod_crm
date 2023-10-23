@@ -1,5 +1,8 @@
 @extends('guestlayout.layout')
 @section('guestcontent')
+@php
+use Illuminate\Support\Str;
+@endphp
 
 <header class="masthead">
     <div class="container px-4 px-lg-5 h-100">
@@ -51,43 +54,38 @@
 
         <!-- Tabs navigation -->
         <ul class="nav nav-tabs" id="categoryTabs" role="tablist">
+            @foreach ($categories as $index => $category)
             <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="tab1-tab" data-bs-toggle="tab" href="#tab1" role="tab"
-                    aria-controls="tab1" aria-selected="true">Category 1</a>
+                <a class="nav-link {{ $index == 0 ? 'active' : '' }}" id="tab-{{ Str::slug($category->category_name) }}"
+                    data-bs-toggle="tab" href="#content-{{ Str::slug($category->category_name) }}" role="tab"
+                    aria-controls="content-{{ Str::slug($category->category_name) }}"
+                    aria-selected="{{ $index == 0 ? 'true' : 'false' }}">{{ $category->category_name }}</a>
             </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="tab2-tab" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
-                    aria-selected="false">Category 2</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="tab3-tab" data-bs-toggle="tab" href="#tab3" role="tab" aria-controls="tab3"
-                    aria-selected="false">Category 3</a>
-            </li>
+            @endforeach
         </ul>
 
         <!-- Tabs content -->
         <div class="tab-content" id="categoryTabsContent">
-            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
-                <!-- Grid of images for Category 1 -->
+            @foreach ($categories as $index => $category)
+            <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}"
+                id="content-{{ Str::slug($category->category_name) }}" role="tabpanel"
+                aria-labelledby="tab-{{ Str::slug($category->category_name) }}">
+
+                <!-- Grid of images for each Category -->
                 <div class="row">
-                    <!-- Repeat this block for each image -->
+                    @foreach ($images->where("category_id", $category->id) as $image)
                     <div class="col-md-4">
-                        {{-- <img src="" alt="Image 1" class="img-fluid" /> --}}
+                        <img src="{{ asset($image->image_path) }}" alt="{{ $category->category_name }}"
+                            class="img-fluid" />
                     </div>
-                    <!-- End block -->
+                    @endforeach
                 </div>
             </div>
-            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
-                <!-- Grid of images for Category 2 -->
-                <!-- Follow the same structure as Category 1 -->
-            </div>
-            <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
-                <!-- Grid of images for Category 3 -->
-                <!-- Follow the same structure as Category 1 -->
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
+
 
 
 
