@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 
 class UserLevelController extends Controller
 {
+    private UserLevelService $userLevelService;
+
     public function __construct(UserLevelService $userLevelService)
     {
         $this->userLevelService = $userLevelService;

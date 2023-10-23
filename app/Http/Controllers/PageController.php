@@ -100,15 +100,15 @@ class PageController extends Controller
 
   public function manageImage()
   {
-    // $hasAccess = $this->permissionCheck(auth()->user()->userlevel->n2_user_roles);
-    // if (!$hasAccess) {
-      // if (Auth::check()) {
-      //   // The user is logged in...
-      //   return redirect()->route('user.dash');
-      // } else {
-      //   return redirect()->route('get.login');
-      // }
-    // }
+    $hasAccess = $this->permissionCheck(auth()->user()->userlevel->n2_images);
+    if (!$hasAccess) {
+      if (Auth::check()) {
+        // The user is logged in...
+        return redirect()->route('user.dash');
+      } else {
+        return redirect()->route('get.login');
+      }
+    }
     return view('tools.manageImages.view', array(
       'pageTitle' => 'Manage Images',
       'pageDescription' => '',
@@ -119,15 +119,15 @@ class PageController extends Controller
 
   public function manageProject()
   {
-    // $hasAccess = $this->permissionCheck(auth()->user()->userlevel->n2_user_roles);
-    // if (!$hasAccess) {
-      // if (Auth::check()) {
-      //   // The user is logged in...
-      //   return redirect()->route('user.dash');
-      // } else {
-      //   return redirect()->route('get.login');
-      // }
-    // }
+    $hasAccess = $this->permissionCheck(auth()->user()->userlevel->n2_projects);
+    if (!$hasAccess) {
+      if (Auth::check()) {
+        // The user is logged in...
+        return redirect()->route('user.dash');
+      } else {
+        return redirect()->route('get.login');
+      }
+    }
     return view('tools.manageProjects.view', array(
       'pageTitle' => 'Manage Projects',
       'pageDescription' => '',
@@ -139,15 +139,15 @@ class PageController extends Controller
 
   public function manageCategory()
   {
-    // $hasAccess = $this->permissionCheck(auth()->user()->userlevel->n2_user_roles);
-    // if (!$hasAccess) {
-      // if (Auth::check()) {
-      //   // The user is logged in...
-      //   return redirect()->route('user.dash');
-      // } else {
-      //   return redirect()->route('get.login');
-      // }
-    // }
+    $hasAccess = $this->permissionCheck(auth()->user()->userlevel->n2_categories);
+    if (!$hasAccess) {
+      if (Auth::check()) {
+        // The user is logged in...
+        return redirect()->route('user.dash');
+      } else {
+        return redirect()->route('get.login');
+      }
+    }
     return view('tools.manageCategories.view', array(
       'pageTitle' => 'Manage Categories',
       'pageDescription' => ''

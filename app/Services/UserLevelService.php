@@ -89,6 +89,9 @@ class UserLevelService
         $userLevel->n1_tools = $validatedData['n1_tools'] ?? 0;
         $userLevel->n2_users = $validatedData['n2_users'] ?? 0;
         $userLevel->n2_user_roles = $validatedData['n2_user_roles'] ?? 0;
+        $userLevel->n2_projects = $validatedData['n2_projects'] ?? 0;
+        $userLevel->n2_images = $validatedData['n2_images'] ?? 0;
+        $userLevel->n2_categories = $validatedData['n2_categories'] ?? 0;
         $userLevel->n2_dashboard = $validatedData['n2_dashboard'] ?? 0;
         $userLevel->n2_forms = $validatedData['n2_forms'] ?? 0;
         $userLevel->n2_crm_logs = $validatedData['n2_crm_logs'] ?? 0;
@@ -103,6 +106,9 @@ class UserLevelService
         $userLevel->n1_tools = $validatedData['n1_tools'] ?? 0;
         $userLevel->n2_users = $validatedData['n2_users'] ?? 0;
         $userLevel->n2_user_roles = $validatedData['n2_user_roles'] ?? 0;
+        $userLevel->n2_projects = $validatedData['n2_projects'] ?? 0;
+        $userLevel->n2_images = $validatedData['n2_images'] ?? 0;
+        $userLevel->n2_categories = $validatedData['n2_categories'] ?? 0;
         $userLevel->n2_dashboard = $validatedData['n2_dashboard'] ?? 0;
         $userLevel->n2_forms = $validatedData['n2_forms'] ?? 0;
         $userLevel->n2_crm_logs = $validatedData['n2_crm_logs'] ?? 0;
