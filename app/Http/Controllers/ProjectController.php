@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProjectEvent;
 use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
 use App\Services\ProjectService;
+use Event;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -34,6 +36,7 @@ class ProjectController extends Controller
         try {
             //code...
             $this->projectService->projectAdd($request->validated());
+            Event::dispatch(new ProjectEvent());
         } catch (\Exception $exception) {
             //throw $ex;
             return response()->json(['error' => $exception->getMessage()],422);
@@ -55,6 +58,7 @@ class ProjectController extends Controller
         try {
             //code...
             $this->projectService->projectEdit($request->validated(),$project);
+            Event::dispatch(new ProjectEvent());
         } catch (\Exception $exception) {
             //throw $ex;
             return response()->json(['error' => $exception->getMessage()],422);

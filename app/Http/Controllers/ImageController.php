@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ImageEvent;
 use App\Http\Requests\ImageRequest;
 use App\Models\Image;
 use App\Services\ImageService;
+use Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -35,6 +37,7 @@ class ImageController extends Controller
         try {
             //code...
             $this->imageService->imageAdd($request->validated());
+            Event::dispatch(new ImageEvent());
         } catch (\Exception $exception) {
             //throw $ex;
             return response()->json(['error' => $exception->getMessage()],422);
@@ -51,6 +54,7 @@ class ImageController extends Controller
         try {
             //code...
             $this->imageService->imageDelete($image);
+            Event::dispatch(new ImageEvent());
         } catch (\Exception $exception) {
             //throw $ex;
             return response()->json(['error' => $exception->getMessage()],422);

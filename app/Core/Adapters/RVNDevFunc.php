@@ -49,7 +49,6 @@ class RVNDevFunc
           'project.index',
           'image.index',
           'category.index',
-          'form.index',
           'crmLog.index',
         ];
       }

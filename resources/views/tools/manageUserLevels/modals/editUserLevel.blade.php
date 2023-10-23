@@ -126,14 +126,6 @@
                             </div>
                             <div class="fv-row mb-6">
                                 <label class="form-check form-check-custom form-check-solid">
-                                    <input class="form-check-input n1_tools" type="checkbox" name="n2_forms" value="1"
-                                        checked />
-                                    <span class="form-check-label fw-bold text-gray-700 fs-6">Manage Forms
-                                    </span>
-                                </label>
-                            </div>
-                            <div class="fv-row mb-6">
-                                <label class="form-check form-check-custom form-check-solid">
                                     <input class="form-check-input n1_tools" type="checkbox" name="n2_crm_logs" value="1"
                                         checked />
                                     <span class="form-check-label fw-bold text-gray-700 fs-6">Manage CRM Logs

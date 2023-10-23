@@ -93,7 +93,6 @@ class UserLevelService
         $userLevel->n2_images = $validatedData['n2_images'] ?? 0;
         $userLevel->n2_categories = $validatedData['n2_categories'] ?? 0;
         $userLevel->n2_dashboard = $validatedData['n2_dashboard'] ?? 0;
-        $userLevel->n2_forms = $validatedData['n2_forms'] ?? 0;
         $userLevel->n2_crm_logs = $validatedData['n2_crm_logs'] ?? 0;
         $userLevel->save();
 
@@ -110,7 +109,6 @@ class UserLevelService
         $userLevel->n2_images = $validatedData['n2_images'] ?? 0;
         $userLevel->n2_categories = $validatedData['n2_categories'] ?? 0;
         $userLevel->n2_dashboard = $validatedData['n2_dashboard'] ?? 0;
-        $userLevel->n2_forms = $validatedData['n2_forms'] ?? 0;
         $userLevel->n2_crm_logs = $validatedData['n2_crm_logs'] ?? 0;
         $userLevel->save();
 

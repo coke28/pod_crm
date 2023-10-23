@@ -190,7 +190,6 @@ jQuery(document).ready(function () {
               $('#edit_user_level_form [name="n2_projects"]').prop('checked', obj.n2_projects == 1);
               $('#edit_user_level_form [name="n2_images"]').prop('checked', obj.n2_images == 1);
               $('#edit_user_level_form [name="n2_categories"]').prop('checked', obj.n2_categories == 1);
-              $('#edit_user_level_form [name="n2_forms"]').prop('checked', obj.n2_forms == 1);
               $('#edit_user_level_form [name="n2_crm_logs"]').prop('checked', obj.n2_crm_logs == 1);
           } 
         }
