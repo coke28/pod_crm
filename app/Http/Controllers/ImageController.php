@@ -61,4 +61,13 @@ class ImageController extends Controller
         ));
     }
 
+    public function imageGetActiveCount()
+    {
+        return json_encode(array(
+            'success' => true,
+            'imageActiveCount' => Image::where('deleted','0')->count()
+        ));
+    }
+
+
 }

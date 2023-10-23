@@ -66,9 +66,9 @@
 
     <div class="card">
       <div class="card-content">
-        <h5 class="card-title">Number Of Active Forms</h5>
-        <p class="card-text">Number of forms currently active:</p>
-        <p>Active Forms: <span class="card-count" id="active-form-count">Loading...</span></p>
+        <h5 class="card-title">Number Of Active Images</h5>
+        <p class="card-text">Number of images currently in use:</p>
+        <p>Active Images: <span class="card-count" id="active-image-count">Loading...</span></p>
       </div>
     </div>
 
@@ -92,8 +92,10 @@
 
   <!--start::Include your scripts here-->
   @section('scripts')
-  <script src="{{ '/custom/broadcast/formCount.js' }}"></script>
+  {{-- <script src="{{ '/custom/broadcast/formCount.js' }}"></script> --}}
   <script src="{{ asset('/custom/broadcast/categoryCount.js') }}"></script>
+  <script src="{{ asset('/custom/broadcast/projectCount.js') }}"></script>
+  <script src="{{ asset('/custom/broadcast/imageCount.js') }}"></script>
   @endsection
 
   <!--start::Include your styles here-->

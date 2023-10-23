@@ -80,4 +80,11 @@ class ProjectController extends Controller
             'message' => 'Project has been deleted.'
         ));
     }
+    public function projectGetActiveCount()
+    {
+        return json_encode(array(
+            'success' => true,
+            'projectActiveCount' => Project::where('status','1')->count()
+        ));
+    }
 }

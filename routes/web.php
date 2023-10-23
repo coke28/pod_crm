@@ -67,6 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::get('get/{project}', [ProjectController::class, 'projectGet'])->name('project.get');
     Route::post('edit/{project}', [ProjectController::class, 'projectEdit'])->name('project.edit');
     Route::post('delete/{project}', [ProjectController::class, 'projectDelete'])->name('project.delete');
+    Route::post('activeCount', [ProjectController::class, 'projectGetActiveCount'])->name('project.get.activeCount');
   });
 
   Route::group(['prefix' => 'image'], function () {
@@ -77,6 +78,7 @@ Route::middleware('auth')->group(function () {
     Route::get('get/{image}', [ImageController::class, 'imageGet'])->name('image.get');
     Route::post('edit/{image}', [ImageController::class, 'imageEdit'])->name('image.edit');
     Route::post('delete/{image}', [ImageController::class, 'imageDelete'])->name('image.delete');
+    Route::post('activeCount', [ImageController::class, 'imageGetActiveCount'])->name('image.get.activeCount');
   });
 
 
