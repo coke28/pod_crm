@@ -31,7 +31,7 @@ class ImageService
             'images.id',
             'images.image_name',
             'images.image_path',
-            'images.category_name',
+            'category_name',
             'projects.project_name',
             'images.status',
             'images.created_at'
