@@ -89,7 +89,7 @@ class CategoryController extends Controller
     {
         return json_encode(array(
             'success' => true,
-            'categoryActiveCount' => Category::where('status','1')->count()
+            'categoryActiveCount' => Category::where('status','1')->where('deleted','0')->count()
         ));
     }
 

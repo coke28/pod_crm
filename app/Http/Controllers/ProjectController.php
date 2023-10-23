@@ -75,6 +75,7 @@ class ProjectController extends Controller
         try {
             //code...
             $this->projectService->projectDelete($project);
+            Event::dispatch(new ProjectEvent());
         } catch (\Exception $exception) {
             //throw $ex;
             return response()->json(['error' => $exception->getMessage()],422);
@@ -88,7 +89,7 @@ class ProjectController extends Controller
     {
         return json_encode(array(
             'success' => true,
-            'projectActiveCount' => Project::where('status','1')->count()
+            'projectActiveCount' => Project::where('status','1')->where('deleted','0')->count()
         ));
     }
 }
