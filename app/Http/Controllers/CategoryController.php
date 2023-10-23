@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CategoryEvent;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Services\CategoryService;
+use Event;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -34,6 +36,7 @@ class CategoryController extends Controller
         try {
             //code...
             $this->categoryService->categoryAdd($request->validated());
+            Event::dispatch(new CategoryEvent());
         } catch (\Exception $exception) {
             //throw $ex;
             return response()->json(['error' => $exception->getMessage()],422);
@@ -55,6 +58,7 @@ class CategoryController extends Controller
         try {
             //code...
             $this->categoryService->categoryEdit($request->validated(),$category);
+            Event::dispatch(new CategoryEvent());
         } catch (\Exception $exception) {
             //throw $ex;
             return response()->json(['error' => $exception->getMessage()],422);
@@ -80,4 +84,13 @@ class CategoryController extends Controller
             'message' => 'Category has been deleted.'
         ));
     }
+
+    public function categoryGetActiveCount()
+    {
+        return json_encode(array(
+            'success' => true,
+            'categoryActiveCount' => Category::where('status','1')->count()
+        ));
+    }
+
 }

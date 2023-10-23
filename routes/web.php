@@ -88,6 +88,7 @@ Route::middleware('auth')->group(function () {
     Route::get('get/{category}', [CategoryController::class, 'categoryGet'])->name('category.get');
     Route::post('edit/{category}', [CategoryController::class, 'categoryEdit'])->name('category.edit');
     Route::post('delete/{category}', [CategoryController::class, 'categoryDelete'])->name('category.delete');
+    Route::post('activeCount', [CategoryController::class, 'categoryGetActiveCount'])->name('category.get.activeCount');
   });
 
  
