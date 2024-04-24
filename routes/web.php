@@ -1,23 +1,14 @@
 <?php
 
-use App\Events\MyEvent;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Account\SettingsController;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\Auth\SocialiteLoginController;
-use App\Http\Controllers\Documentation\ReferencesController;
-use App\Http\Controllers\Logs\AuditLogsController;
-use App\Http\Controllers\Logs\SystemLogsController;
-use App\Http\Controllers\PagesController;
-use App\Http\Controllers\FormController;
+use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CrmLogController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserLevelController;
-use Illuminate\Support\Facades\Event;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,9 +25,10 @@ Route::get('/', 'PageController@indexPage')->name('get.index');
 Route::get('/login', 'PageController@loginPage')->name('get.login');
 Route::post('/login', 'Auth\AuthenticatedSessionController@store')->name('post.login');
 
-Route::get('/guest', 'PageController@guestPage')->name('guest.index');
-Route::get('/project/{project}', 'PageController@projectPage')->name('guest.project');
-
+Route::middleware('setLocale')->group(function () {
+  Route::get('/guest', 'PageController@guestPage')->name('guest.index');
+  Route::get('/project/{project}', 'PageController@projectPage')->name('guest.project');
+});
 Route::middleware('auth')->group(function () {
 
   // Define your routes here
@@ -93,7 +85,7 @@ Route::middleware('auth')->group(function () {
     Route::post('activeCount', [CategoryController::class, 'categoryGetActiveCount'])->name('category.get.activeCount');
   });
 
- 
+
 
   Route::group(['prefix' => 'crmLog'], function () {
     //Form Routes

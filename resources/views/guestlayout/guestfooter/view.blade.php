@@ -5,9 +5,9 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-lg-8 col-xl-6 text-center">
                     <!-- Existing content -->
-                    <h2 class="mt-0">Let's Get In Touch!</h2>
+                    <h2 class="mt-0">{{ __('Lets Get In Touch!') }}</h2>
                     <hr class="divider" />
-                    <p class="text-muted mb-5">Ready to start your next project with us? Send us a messages and we will get back to you as soon as possible!</p>
+                    <p class="text-muted mb-5">{{ __('Ready to start your next project with us? Send us a messages and we will get back to you as soon as possible!') }}</p>
                 </div>
             </div>
 
@@ -23,28 +23,28 @@
                     <form id="contactForm">
                         <!-- Name input-->
                         <div class="form-floating mb-3">
-                            <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                            <label for="name">Full name</label>
-                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                            <input class="form-control" id="name" type="text" placeholder="{{ __('Enter your name...') }}" data-sb-validations="required" />
+                            <label for="name">{{ __('Fullname') }}</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">{{ __('A name is required.') }}</div>
                         </div>
                         <!-- Email address input-->
                         <div class="form-floating mb-3">
                             <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                            <label for="email">Email address</label>
-                            <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                            <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                            <label for="email">{{ __('Email Address') }}</label>
+                            <div class="invalid-feedback" data-sb-feedback="email:required">{{ __('An email is required.') }}</div>
+                            <div class="invalid-feedback" data-sb-feedback="email:email">{{ __('Email is not valid.') }}</div>
                         </div>
                         <!-- Phone number input-->
                         <div class="form-floating mb-3">
                             <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
-                            <label for="phone">Phone number</label>
-                            <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                            <label for="phone">{{ __('Phone number') }}</label>
+                            <div class="invalid-feedback" data-sb-feedback="phone:required">{{ __('A phone number is required.') }}</div>
                         </div>
                         <!-- Message input-->
                         <div class="form-floating mb-3">
-                            <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
-                            <label for="message">Message</label>
-                            <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                            <textarea class="form-control" id="message" type="text" placeholder="{{ __('Enter your message here...') }}" style="height: 10rem" data-sb-validations="required"></textarea>
+                            <label for="message">{{ __('Message') }}</label>
+                            <div class="invalid-feedback" data-sb-feedback="message:required">{{ __('A message is required.') }}</div>
                         </div>
                         <!-- Submit success message-->
                         <!---->
@@ -52,7 +52,7 @@
                         <!-- has successfully submitted-->
                         <div class="d-none" id="submitSuccessMessage">
                             <div class="text-center mb-3">
-                                <div class="fw-bolder">Form submission successful!</div>
+                                <div class="fw-bolder">{{ __('Form submission successful!') }}</div>
                                 To activate this form, sign up at
                                 <br />
                                 <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
@@ -62,15 +62,15 @@
                         <!---->
                         <!-- This is what your users will see when there is-->
                         <!-- an error submitting the form-->
-                        <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                        <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">{{ __('Error sending message!') }}</div></div>
                         <!-- Submit Button-->
-                        <div class="d-grid"><button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Submit</button></div>
+                        <div class="d-grid"><button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">{{ __('Submit') }}</button></div>
                     </form>
                 </div>
                 <!-- Adding new column for the contact information -->
                 <div class="col-lg-6">
                     <div class="general-contact-info">
-                        <h5>GENERAL CONTACT INFORMATION</h5>
+                        <h5>{{ __('General Contact Information') }}</h5>
                         <p>info@podcentres.com</p>
                         <p>9100 Pascal Gagnon, suite 200, Montréal (Québec), H1P 2X4</p>
                         <p>T 514 353 6060</p>
@@ -95,7 +95,7 @@
 
     <!-- Footer -->
     <div class="container px-4 px-lg-5">
-        <div class="small text-center text-muted">Copyright &copy; {{ now()->format('Y'); }} - P.O.D</div>
+        <div class="small text-center text-muted">Copyright &copy  P.O.D</div>
     </div>
 </footer>
 
